@@ -8,7 +8,7 @@ videojs.plugin('speed', function(options) {
     function changeSpeed(item) {
         var opt = item.options();
         item.selected(true);
-        player.M.playbackRate = opt.rate; // FIXME player.M
+        player.playbackRate(opt.rate);
 
         var nodes = player.controlBar.speedButton.el().firstChild.children;
         for (var i = 0, l = nodes.length; i < l; i++) {
@@ -59,8 +59,12 @@ videojs.plugin('speed', function(options) {
         player.controlBar.speedButton = player.controlBar.addChild(button);
         changeSpeed(selectedItem);
         
-        if (player.M.id.indexOf('html5') == -1) { // FIXME player.M
-            button.hide();
+        try {
+            if (player.c.P.id.indexOf('html5') == -1) { // FIXME player.c.P
+                button.hide();
+            }
+        } catch (err) {
+            console.log("can't detect tech.");
         }
     });
 });
